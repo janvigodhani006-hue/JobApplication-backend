@@ -4,7 +4,9 @@ import com.example.jobApplication.Entity.User;
 import com.example.jobApplication.dto.UserDto;
 import com.example.jobApplication.exception.DuplicateResourceException;
 import com.example.jobApplication.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
     private final UserRepository userRepository;
 
