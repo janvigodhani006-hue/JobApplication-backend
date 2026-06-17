@@ -3,6 +3,7 @@ package com.example.jobApplication.service;
 import com.example.jobApplication.Entity.User;
 import com.example.jobApplication.dto.UserDto;
 import com.example.jobApplication.exception.DuplicateResourceException;
+import com.example.jobApplication.exception.ResourceNotFoundException;
 import com.example.jobApplication.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,12 @@ public class UserService {
             User saveProduct = userRepository.save(user);
             return mapToDTO(saveProduct);
         }
+    }
+
+    public UserDto getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+        return mapToDTO(user);
     }
 
     private UserDto mapToDTO(User user) {

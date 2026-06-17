@@ -5,6 +5,8 @@ import com.example.jobApplication.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,19 +19,28 @@ public class UserController {
 
     private final UserService userService;
 
-    UserController(UserService userService){
+    UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         UserDto created = userService.createUser(userDto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
 
-}
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserDto> login(@Valid @RequestBody UserDto userDto) {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
-    //*POST** | `/api/auth/register` | Create a new user account | Public |
-    //| **POST** | `/api/auth/login` | Log in and receive JWT token | Public |
-    //| **GET** | `/api/auth/me` | Fetch authenticated user detail | Authorized |
+    @org.springframework.web.bind.annotation.GetMapping("/me")
+    public ResponseEntity<UserDto> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+        UserDto userDto = userService.getUserByEmail(userEmail);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
 }
