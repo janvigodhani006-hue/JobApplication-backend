@@ -34,29 +34,29 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 LocalDateTime.now(),
                 null
-
         );
-        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorResponse> handleBadRequest(BadRequestException ex){
         ErrorResponse error = new ErrorResponse(
-                HttpStatus.NO_CONTENT.value(),
+                HttpStatus.BAD_REQUEST.value(),
                 "Bad Request",
                 ex.getMessage(),
                 LocalDateTime.now(),
                 null
         );
-        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex){
+        ex.printStackTrace();
         ErrorResponse error = new ErrorResponse(
-                HttpStatus.NO_CONTENT.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Internal Server Error",
-                "Something went wrong. Please try again later.",
+                ex.getMessage() != null ? ex.getMessage() : "Something went wrong. Please try again later.",
                 LocalDateTime.now(),
                 null
         );
