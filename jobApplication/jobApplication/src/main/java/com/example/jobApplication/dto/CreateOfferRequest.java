@@ -1,9 +1,6 @@
 package com.example.jobApplication.dto;
 
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -27,6 +24,6 @@ public record CreateOfferRequest(
         @NotNull(message = "Deadline is required")
         OffsetDateTime deadline,
         @Min(value = 0, message = "Match percentage must be between 0 and 100")
-        @Min(value = 100, message = "Match percentage must be between 0 and 100") // This should be @Max
+        @Max(value = 100, message = "Match percentage must be between 0 and 100") // This should be @Max
         int matchPercentage
 ) {}

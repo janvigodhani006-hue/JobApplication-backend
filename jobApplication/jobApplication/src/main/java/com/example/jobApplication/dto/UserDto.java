@@ -19,4 +19,6 @@ public class UserDto {
     private String passwordHash;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
+
+
 }
