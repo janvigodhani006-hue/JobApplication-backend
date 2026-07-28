@@ -9,6 +9,7 @@ import com.example.jobApplication.repository.UserRepository;
 import com.example.jobApplication.repository.specs.ApplicationSpecs;
 import com.example.jobApplication.service.ApplicationService;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -47,7 +48,7 @@ public class ApplicationController {
             @AuthenticationPrincipal UserDetails userDetails,
 //            @RequestParam(required = false) String search,
 //            @RequestParam(required = false) String status,
-            Pageable pageable) {
+            @ParameterObject Pageable pageable) {
         
         User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow();
         Specification<Application> spec = ApplicationSpecs.forUser(user.getId());
