@@ -78,12 +78,24 @@ public class SecurityConfig {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:8080"));
+        // Allow all frontend dev origins (must match CorsConfig.java)
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "http://localhost:3001",
+                "http://localhost:5173",
+                "http://localhost:5174",
+                "http://localhost:8080"
+        ));
 
+        // PATCH is required for:
+        //   PATCH /api/interviews/{id}/complete
+        //   PATCH /api/offers/{id}/status
+        //   PATCH /api/applications/{id}/status
         configuration.setAllowedMethods(List.of(
                 "GET",
                 "POST",
                 "PUT",
+                "PATCH",
                 "DELETE",
                 "OPTIONS"
         ));
