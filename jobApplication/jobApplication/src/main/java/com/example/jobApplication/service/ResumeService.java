@@ -85,6 +85,7 @@ public class ResumeService {
                     .version(version)
                     .filePath(relativePath)
                     .fileSize(fileSizeStr)
+                    .pdfData(file.getBytes())
                     .build();
 
             resume = resumeRepository.save(resume);
@@ -147,7 +148,8 @@ public class ResumeService {
                 resume.getFilePath(),
                 resume.getFileSize(),
                 appCount,
-                resume.getCreatedAt()
+                resume.getCreatedAt(),
+                resume.getPdfData()
         );
     }
 }

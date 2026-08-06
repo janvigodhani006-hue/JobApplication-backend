@@ -10,5 +10,7 @@ public record ResumeResponse(
         String filePath,
         String fileSize,
         int applicationCount,  // Computed by service layer (not stored in DB)
-        OffsetDateTime createdAt
+        OffsetDateTime createdAt,
+        byte[] pdfData
+
 ) {}

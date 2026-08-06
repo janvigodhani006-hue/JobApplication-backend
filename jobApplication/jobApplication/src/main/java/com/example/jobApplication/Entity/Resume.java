@@ -32,6 +32,9 @@ public class Resume {
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
 
+    @Column(name = "PDF File" , columnDefinition = "BYTEA")
+    private byte[] pdfData;
+
     @PrePersist protected void onCreate() {
         createdAt = updatedAt = OffsetDateTime.now();
     }
@@ -44,7 +47,7 @@ public class Resume {
     }
 
     // AllArgsConstructor
-    public Resume(UUID id, User user, String name, String version, String filePath, String fileSize, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public Resume(UUID id, User user, String name, String version, String filePath, String fileSize, OffsetDateTime createdAt, OffsetDateTime updatedAt,byte[] pdfData) {
         this.id = id;
         this.user = user;
         this.name = name;
@@ -53,6 +56,7 @@ public class Resume {
         this.fileSize = fileSize;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.pdfData = pdfData;
     }
 
     // Getters
@@ -88,6 +92,10 @@ public class Resume {
         return updatedAt;
     }
 
+    public byte[] getPdfData() {
+        return pdfData;
+    }
+
     // Setters
     public void setId(UUID id) {
         this.id = id;
@@ -121,6 +129,10 @@ public class Resume {
         this.updatedAt = updatedAt;
     }
 
+    public void setPdfData(byte[] pdfData) {
+        this.pdfData = pdfData;
+    }
+
     // equals, hashCode, toString
     @Override
     public boolean equals(Object o) {
@@ -134,12 +146,13 @@ public class Resume {
                Objects.equals(filePath, resume.filePath) &&
                Objects.equals(fileSize, resume.fileSize) &&
                Objects.equals(createdAt, resume.createdAt) &&
-               Objects.equals(updatedAt, resume.updatedAt);
+               Objects.equals(updatedAt, resume.updatedAt) &&
+                Objects.equals(pdfData, resume.pdfData);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, name, version, filePath, fileSize, createdAt, updatedAt);
+        return Objects.hash(id, user, name, version, filePath, fileSize, createdAt, updatedAt,pdfData);
     }
 
     @Override
@@ -153,6 +166,8 @@ public class Resume {
                ", fileSize='" + fileSize + '\'' +
                ", createdAt=" + createdAt +
                ", updatedAt=" + updatedAt +
+                ", pdfData=" + pdfData +
+
                '}';
     }
 
@@ -170,6 +185,7 @@ public class Resume {
         private String fileSize;
         private OffsetDateTime createdAt;
         private OffsetDateTime updatedAt;
+        private byte[] pdfData;
 
         public Builder id(UUID id) {
             this.id = id;
@@ -210,9 +226,13 @@ public class Resume {
             this.updatedAt = updatedAt;
             return this;
         }
+        public Builder pdfData(byte[] pdfData) {
+            this.pdfData = pdfData;
+            return this;
+        }
 
         public Resume build() {
-            return new Resume(id, user, name, version, filePath, fileSize, createdAt, updatedAt);
+            return new Resume(id, user, name, version, filePath, fileSize, createdAt, updatedAt,pdfData);
         }
     }
 }
